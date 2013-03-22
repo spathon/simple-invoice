@@ -2,6 +2,10 @@ var formatDate = function(date){
   var dd = date.getDate(),
       mm = date.getMonth() + 1,
       yy = date.getFullYear();
+
+  if (dd < 10) { dd = "0"+ dd; }
+  if (mm < 10) { mm = "0"+ mm; }
+
   return dd +'-'+ mm +'-'+ yy;
 };
 
@@ -85,9 +89,9 @@ function InvoiceCtrl($scope){
   };
 
   $scope.rowTotal = function(item){
-    var tot = (item.quantity * item.price)
+    var tot = (item.quantity * item.price);
     return (tot) ? tot +':-' : '';
-  }
+  };
 
   $scope.vatSum = function(){
     return ~~($scope.sum() * ($scope.data.VAT / 100));
