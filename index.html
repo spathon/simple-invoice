@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+  <meta charset="utf-8" />
+  <title>Faktura mall</title>
+  <link rel="stylesheet" href="css/styles.css" type="text/css" />
+</head>
+<body ng-controller="InvoiceCtrl">
+
+<form action="" method="post" name="invoiceForm" class="invoice group">
+
+  <div class="header group">
+    <div class="alignleft col-2">
+      <textarea name="company_name" ng-model="data.companyName" class="company-name"></textarea>
+    </div>
+
+    <div class="alignright info-box col-2">
+      <div class="invoice-nr">
+        <label for="invoiceNr">Fakturanummer:</label> <input type="number" name="invoiceNr" ng-model="data.invoiceNr">
+      </div>
+      <label for="invoiceDate">Fakturadatum:</label>
+      <input type="text" name="invoiceDate" ng-model="data.invoiceDate" class="invoice-date">
+      <label for="invoiceLastDate">Förfallodatum:</label>
+      <input type="text" name="invoiceLastDate" ng-model="data.invoiceLastDate" class="invoice-date">
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="alignleft col-2">
+      <!-- ansändare -->
+      <div class="company">
+        <h3>Ansändare</h3>
+        <textarea name="address" ng-model="data.address"></textarea>
+      </div>
+    </div>
+
+    <div class="alignright col-2">
+      <!-- Fakturaadress -->
+      <div class="invoice-address">
+        <h3>Fakturaadress</h3>
+        <textarea name="invoiceAddress" ng-model="data.invoiceAddress"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="message">
+    <!--textarea name="message" ng-model="data.message">Later maybe</textarea-->
+  </div>
+
+  <table class="item-table">
+    <tr class="table-header">
+      <th class="col-item">Artikel/tjänst</th>
+      <th class="col-desc">Beskrivning</th>
+      <th class="col-qantity">Antal</th>
+      <th class="col-price">à-pris</th>
+      <th class="col-total">Belopp</th>
+    </tr>
+    <tr ng-repeat="item in data.items">
+      <td><input type="text" ng-model="item.name"></td>
+      <td><input type="text" ng-model="item.desc"></td>
+      <td><input type="number" ng-model="item.quantity"></td>
+      <td><input type="number" ng-model="item.price"></td>
+      <td class="number">{{ rowTotal(item) }}</td>
+    </tr>
+    <tr>
+      <td class="space-td" colspan="5">&nbsp;</td>
+    </tr>
+    <tr class="sum table-footer">
+      <td colspan="4" class="label">Summa</td>
+      <td class="number">{{ sum() }}:-</td>
+    </tr>
+    <tr class="vat table-footer">
+      <td colspan="4" class="label">Moms <input type="number" ng-model="data.VAT">%</td>
+      <td class="number">{{ vatSum() }}:-</td>
+    </tr>
+    <tr class="total-sum table-footer">
+      <td colspan="4" class="label">Total summa</td>
+      <td class="number">{{ totalSum() }}:-</td>
+    </tr>
+  </table>
+
+  <div class="no-print add-remove-rows">
+    <div class="btn btn-add" ng-click="addRow()">+ Rad</div>
+    <div class="btn btn-remove" ng-click="removeRow()">- Rad</div>
+  </div>
+
+
+  <div class="footer">
+    <div class="col-3">
+      <label for="phone">Tel.nr</label>
+      <input type="tel" name="phone" ng-model="data.phone">
+      <label for="webpage">Hemsida:</label>
+      <input type="url" name="webpage" ng-model="data.webpage">
+      <label for="email">E-post:</label>
+      <input type="email" name="email" ng-model="data.email">
+    </div>
+    <div class="col-3">
+      <label for="orgNr">Org.nr:</label>
+      <input type="text" name="orgNr" ng-model="data.orgNr">
+      <label for="vat">VAT/Momsreg.nr:</label>
+      <input type="text" name="vat" ng-model="data.vatNr">
+      <div ng-class="print(data.swift)">
+        <label for="swift">SWIFT/BIC:</label>
+        <input type="text" name="swift" ng-model="data.swift">
+      </div>
+      <div ng-class="print(data.iban)">
+        <label for="iban">IBAN:</label>
+        <input type="text" name="iban" ng-model="data.iban">
+      </div>
+    </div>
+    <div class="col-3">
+      <div ng-class="print(data.bankgiro)">
+        <label for="bankgiro">Bankgiro:</label>
+        <input type="text" name="bankgiro" ng-model="data.bankgiro">
+      </div>
+      <div ng-class="print(data.plusgiro)">
+        <label for="plusgiro">Plusgiro:</label>
+        <input type="text" name="plusgiro" ng-model="data.plusgiro">
+      </div>
+      <div ng-class="print(data.bankkonto)">
+        <label for="bankkonto">Bankkonto:</label>
+        <input type="text" name="bankkonto" ng-model="data.bankkonto">
+      </div>
+    </div>
+    <div class="clear">
+      Innehar F-skattesedel
+    </div>
+  </div>
+
+</form>
+
+
+<script src="js/angular.js"></script>
+<script src="js/app.js"></script>
+<script src="js/controllers/invoiceCtrl.js"></script>
+
+</body>
+</html>
